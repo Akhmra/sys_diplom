@@ -6,6 +6,11 @@
 [Полное задание к дипломной работе:](https://github.com/netology-code/sys-diplom/tree/diplom-zabbix)  
 ---
 
+# Результат
+## [Сайт](http://158.160.140.199)
+## [Zabbix](http://158.160.127.199) (Логин: Admin | Пароль: zabbix)
+## [Elasticsearch](http://51.250.81.187)
+
 # Подготовка к развёртке инфраструктуры
 
 - скачивание последней версии Terraform из [зеркала](https://hashicorp-releases.yandexcloud.net/terraform/) Яндекс.

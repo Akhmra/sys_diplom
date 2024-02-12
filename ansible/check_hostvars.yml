@@ -1,0 +1,10 @@
+#Проверка наличия hostvars
+---
+- name: playbook to show hostvars
+  hosts: all
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Display the specific hostvars that are set in the inventory for each host
+      ansible.builtin.debug:
+        var: hostvars[inventory_hostname]

@@ -86,7 +86,7 @@ cat ~/.ssh/id_rsa.pub
 
 ---
 
-## Разветка Terraform
+# Развёртка Terraform
 После подготовки остальных ```.tf``` конфигов можно начинать развертку из папки Terraform.
 
 - запуск развертки
@@ -117,11 +117,76 @@ cat ~/.ssh/id_rsa.pub
 ![Yandex_Cloud_Snapshots](./img/Yandex_cloud_snapshots.png)
 ---
 
-## Развертка Ansible
+# Развёртка Ansible
 Первым делом, нужно установить Ansible, однако с его установкой и запуском есть рад не очевидных нюансов.
 В данном проекте я использовал не только ```roles``` но ```collections```, однако если на Debian 11 использовать команду
 ```
 apt install ansible
 ```
-тогда он подтянет старую версию ```10.0.0```. Для использования ```collections``` нужно иметь версию не менее ```11.0.0```.
+тогда он установит старую версию ```10.0.0```. Для использования ```collections``` нужно иметь версию не менее ```11.0.0```.
 Так что, я рекомендую внимательно смотреть на версию Ansbile и версии ```collections``` и ```roles``` что бы они были совместимы. Более подробно это описано в официальной [документации](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) Ansible.
+
+- установка Ansible
+```
+$ UBUNTU_CODENAME=focal
+$ wget -O- "https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=get&search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367" | sudo gpg --dearmour -o /usr/share/keyrings/ansible-archive-keyring.gpg
+$ echo "deb [signed-by=/usr/share/keyrings/ansible-archive-keyring.gpg] http://ppa.launchpad.net/ansible/ansible/ubuntu $UBUNTU_CODENAME main" | sudo tee /etc/apt/sources.list.d/ansible.list
+$ sudo apt update && sudo apt install ansible
+```
+- создание папки ```/distribute``` и скачивание ```.deb``` пакетов elasticsearch, filebeat, kibana из [зеркала](https://mirror.yandex.ru/mirrors/elastic/) Яндекс. Версии должны быть одинаковыми и указываться в файле ```/ansible/elk/vars.yml```.
+```
+mkdir distribute
+cd distribute/
+wget https://mirror.yandex.ru/mirrors/elastic/7/pool/main/e/elasticsearch/elasticsearch-7.17.14-amd64.deb
+wget https://mirror.yandex.ru/mirrors/elastic/7/pool/main/f/filebeat/filebeat-7.17.14-amd64.deb
+wget https://mirror.yandex.ru/mirrors/elastic/7/pool/main/k/kibana/kibana-7.17.14-amd64.deb
+```
+- создание файла ```/ansible/ansible.cfg``` и проверка, что ансибл принял конфиг.
+```
+ansible --version
+```
+- пинг хостов и копирование ключа ssh
+```
+ansible all -m ping
+```
+![Ansible_Ping](./img/ansible_ping.png)
+
+- запуск первого плейбука, который устанавливает ```roles``` и ```collections```
+```
+ansible-playbook playbook1.yml
+```
+![Ansible_PB_1](./img/ansible_pb1.png)
+
+- запуск второго плейбука, который переносит и устанавливает все необходимые приложения, конфиги и ```html``` страницы
+```
+ansible-playbook playbook2.yml --vault-password-file pass -v
+```
+
+![Ansible_PB_2](img/ansible_pb2.png)
+
+---
+
+# Результат
+- проверка работы балансировщика
+
+```
+curl -v 158.160.140.199:80
+```
+- либо зайти на сам [балансировщик](http://158.160.140.199)
+
+![Webserver_1](./img/web-server1.png)
+
+![Webserver_2](./img/web-server2.png)
+
+- проверка работы [Zabbix](http://158.160.127.199) и сбора метрик (Логин: Admin | Пароль: zabbix)
+
+![Zabbix_General](./img/Zabbix_general.png)
+
+![Zabbix_Hosts](./img/Zabbix_hosts.png)
+
+- проверка работы Elasticsearch + Kibana и отправки метрик с веб-серверов
+
+![Elastic_Hosts](./img/Elastic_hosts.png)
+
+![Elastic_Stream](./img/Elastic_stream.png)
+

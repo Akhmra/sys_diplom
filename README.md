@@ -6,7 +6,7 @@
 [Полное задание к дипломной работе:](https://github.com/netology-code/sys-diplom/tree/diplom-zabbix)  
 ---
 
-# Подготовка к развёртке
+# Подготовка к развёртке инфраструктуры
 
 - скачивание последней версии Terraform из [зеркала](https://hashicorp-releases.yandexcloud.net/terraform/) Яндекс.
 ```
@@ -86,11 +86,42 @@ cat ~/.ssh/id_rsa.pub
 
 ---
 
-## Разветка
+## Разветка Terraform
 После подготовки остальных ```.tf``` конфигов можно начинать развертку из папки Terraform.
 
 - запуск развертки
 ```
 ./terraform apply
 ```
+- получаем список IP-адресов (файл ```ansible_inventory.tf``` копирует адреса в файл ```/ansibe/hosts.ini```)
 
+![Terraform_output](./img/Terraform_output.png)
+
+Проверка результата в Yandex Cloud:
+- одна сеть bastion-network
+- две подсети bastion-internal-segment и bastion-external-segment
+- Балансировщик alb-lb с роутером web-servers-router, целевой группой tg-web
+
+![Yandex_cloud_General](./img/Yandex_cloud_general.png)
+
+- 6 виртуальных машин
+
+![Yandex_Cloud_VM](./img/Yandex_cloud_vm.png)
+
+- 10 групп безопасности
+
+![Yandex_Cloud_SG](./img/Yandex_cloud_sg.png)
+
+- ежедневные снимки дисков по расписанию
+
+![Yandex_Cloud_Snapshots](./img/Yandex_cloud_snapshots.png)
+---
+
+## Развертка Ansible
+Первым делом, нужно установить Ansible, однако с его установкой и запуском есть рад не очевидных нюансов.
+В данном проекте я использовал не только ```roles``` но ```collections```, однако если на Debian 11 использовать команду
+```
+apt install ansible
+```
+тогда он подтянет старую версию ```10.0.0```. Для использования ```collections``` нужно иметь версию не менее ```11.0.0```.
+Так что, я рекомендую внимательно смотреть на версию Ansbile и версии ```collections``` и ```roles``` что бы они были совместимы. Более подробно это описано в официальной [документации](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) Ansible.

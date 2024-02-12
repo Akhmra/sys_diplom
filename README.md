@@ -184,7 +184,7 @@ curl -v 158.160.140.199:80
 
 ![Zabbix_Hosts](./img/Zabbix_hosts.png)
 
-- проверка работы Elasticsearch + Kibana и отправки метрик с веб-серверов
+- проверка работы Elasticsearch + Kibana, а также отправки Filebeat-ом метрик с веб-серверов
 
 ![Elastic_Hosts](./img/Elastic_hosts.png)
 

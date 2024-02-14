@@ -10,7 +10,7 @@ terraform {
 
 # Описание доступа и токена
 provider "yandex" {
-  serviceaccountkeyfile  =  "~/serviceaccountkeyfile.json"
+  serviceaccountkeyfile  =  "home/suhin/sys-diplom/serviceaccountkeyfile.json"
   cloud_id  = "ID облака"
   folder_id = "ID папки"
 }

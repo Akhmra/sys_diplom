@@ -10,7 +10,7 @@ terraform {
 
 # Описание доступа и токена
 provider "yandex" {
-  token     = "OAuth-токен"
+  serviceaccountkeyfile  =  "~/serviceaccountkeyfile.json"
   cloud_id  = "ID облака"
   folder_id = "ID папки"
 }

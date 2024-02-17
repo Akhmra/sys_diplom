@@ -5,4 +5,4 @@
     shell: /bin/bash
     sudo: ['ALL=(ALL) NOPASSWD:ALL']
     ssh-authorized-keys:
-     - ssh-rsa **********
+     - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCtIn4qaml3C5yJx94r5uU6XlsZcksz9szSF6Vk5nAfhjX55UTVrNBWDGO4WmVc8/c+VIkAXaNA+2biMmhEbbSpVfZPQR87UIZq/92qIec4EFmmy3orZF3ccDiobJuqJcFR64TynPW/XyNVHgT0OC5d98MGBadEFO9n7mUcztaxen+lgLAzfXCS2S3mYoqMsiBiHufuL3bEAMrdzI7WNlG8tC7jfV0uWuMNZ2jGk00Xi2tUoTpaXqr00tzw94lyvD2LsYV4ISQUqol7MBfyOAlm0gowfCWglg5I9KsiTxOTHBK5JGZ2bpmQe7c3mp54h85W5JpydqOPdN15eizIbSP5QaaQTuQ01Nffc6gEjzlFSAI1ziqaS0x28NxdzD3nAiT4KljN/+1Ny2nGXt8+5NotgfGFHyRiRenfaVF//sZigz6fmYDDqQap7GC6XVRQsR3NkF7rawJuVwRkw5RyFRHHdx6/YGsXRIWmArULNavYzuoh8LgGcAsYIuxn06QCNIM= root@debian

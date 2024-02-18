@@ -195,3 +195,21 @@ curl -v 158.160.140.199:80
 
 ![Elastic_Stream](./img/Elastic_stream.png)
 
+---
+# Доработка
+
+## Подключение модуля stub_status для Nginx
+
+Модуль stub_status необходим для генерации данных об сетевой активности web-сервера. Нужно его включить:
+
+- создание и настройка файла ```/etc/nginx/conf.d/stub_status.conf```
+
+![Nginx_stub_status](./img/ngxinx_stub_status.png)
+
+- активация ```items``` в Zabbix
+
+![Zabbix_ite_activation](./img/zabbix_nginx_stub_status.png)
+
+- вывод дашбордов
+
+![Zabbix_Dashbords](./img/Zabbix_dashbords.png)

@@ -7,9 +7,9 @@
 ---
 
 # Результат
-## [Сайт](http://158.160.140.199)
-## [Zabbix](http://158.160.127.199) (Логин: Admin | Пароль: zabbix)
-## [Elasticsearch](http://51.250.81.187:5601)
+## [Сайт](http://158.160.148.126)
+## [Zabbix](http://51.250.84.69) (Логин: Admin | Пароль: zabbix)
+## [Elasticsearch](http://158.160.50.166:5601)
 
 # Подготовка к развёртке инфраструктуры
 
@@ -59,7 +59,7 @@ terraform {
 
 # Описание доступа и токена
 provider "yandex" {
-  token     = "OAuth-токен"
+  serviceaccountkeyfile  =  "home/suhin/sys-diplom/terraform/serviceaccountkeyfile.json"
   cloud_id  = "ID облака"
   folder_id = "ID папки"
 }
@@ -206,10 +206,27 @@ curl -v 158.160.140.199:80
 
 ![Nginx_stub_status](./img/ngxinx_stub_status.png)
 
-- активация ```items``` в Zabbix
+- активация ```item``` в Zabbix
 
 ![Zabbix_ite_activation](./img/zabbix_nginx_stub_status.png)
 
-- вывод дашбордов
+## Мониторинг статус-кодов HTTP
+По умолчанию пользователь zabbix, под которым работает Zabbix-agent не имеет доступа к файлу ```/var/log/nginx/access.log```
 
-![Zabbix_Dashbords](./img/Zabbix_dashbords.png)
+- проверка прав на ```access.log``` и добавление пользователя zabbix в группу ```adm```
+
+![access.log_permission](./img/http_codes_permission.png)
+
+- убедиться что пользватель zabbix получил доступ к логам
+
+![access.log_permition_check](./img/http_codes_permission_check.png)
+
+- сделать то же самое на webserver-2
+
+- создание нового ```item``` в Zabbix
+
+![Zabbix_http_item](./img/Zabbix_http_item.png)
+
+- вывод всех дашбордов
+
+![Zabbix_dashbords](./img/Zabbix_dashbords.png)

@@ -230,3 +230,7 @@ curl -v 158.160.140.199:80
 - вывод всех дашбордов
 
 ![Zabbix_dashbords](./img/Zabbix_dashbords.png)
+
+- более удобная визуализация статус кодов в ELK
+
+![Elk_stream_access.log](./img/Elastic_stream_2.png)
